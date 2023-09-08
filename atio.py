@@ -1,3 +1,7 @@
+import sys
+import os
+import shutil
+import subprocess
 from util.plugins.update import search_for_updates
 from util.plugins.commun import *
 

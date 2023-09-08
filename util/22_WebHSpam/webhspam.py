@@ -3,7 +3,7 @@ import time
 from colorama import Fore
 import os
 import ctypes
-from util.plugins.commun import * 
+from util.plugins.commun import *
 
 def webhookspam():
     setTitle("WebHook Spammer")
@@ -15,7 +15,7 @@ def webhookspam():
     message = input(f"""{y}[{b}#{y}]{w} Message: """)
     print(f"""\n{y}[{w}+{y}]{w} Amount of time for the attack (s) """)
     timer = input(f"""{y}[{b}#{y}]{w} Amount: """)
-    input(f"""\n\n{y}[{b}#{y}]{w} Press ENTER to Valid""")
+    input(f"""\n\n{y}[{b}#{y}]{w} Press ENTER to Validate""")
 
     try:
         timeout = time.time() + 1 * float(timer)
@@ -23,8 +23,8 @@ def webhookspam():
         while time.time() < timeout:
             response = requests.post(
                 webhook,
-                json = {"content" : message},
-                params = {'wait' : True}
+                json={"content": message},
+                params={'wait': True}
             )
             clear()
             time.sleep(1)
@@ -35,8 +35,8 @@ def webhookspam():
                 time.sleep(response.json()["retry_after"] / 1000)
             else:
                 print(f"""{y}[{Fore.LIGHTRED_EX }!{y}]{w} Error code: {response.status_code}""")
-    except:
-        print(f"""      {y}[{Fore.LIGHTRED_EX }!{y}]{w} Your request is invalid !""")
+    except requests.exceptions.RequestException as e:
+        print(f"""      {y}[{Fore.LIGHTRED_EX }!{y}]{w} An error occurred: {e}""")
         time.sleep(2)
         clear()
         main()
@@ -46,5 +46,5 @@ def webhookspam():
     print(f"""{y}[{Fore.LIGHTGREEN_EX }!{y}]{w} Webhook has been spammed""")
     input(f"""\n{y}[{b}#{y}]{w} Press ENTER to exit""")
     main()
-    
+
 webhookspam()
